@@ -7,7 +7,6 @@ using static UnityEditor.Progress;
 
 public class ClearCounter : MonoBehaviour, IInteractableObject, IKitchenObjectParent
 {
-    
     [SerializeField]
     private ClearCounter NextCounter;
     [SerializeField]
@@ -16,10 +15,14 @@ public class ClearCounter : MonoBehaviour, IInteractableObject, IKitchenObjectPa
     private Transform spawnPoint;
     private KitchenObject kitchenObject;
     private Sprite defaultSprite;
+    private SpriteRenderer counterIcon;
+
     private void Awake()
     {
-        defaultSprite = this.GetComponentInChildren<SpriteRenderer>().sprite;
+        counterIcon = GetComponentInChildren<SpriteRenderer>();
+        defaultSprite = counterIcon.sprite;
     }
+
     public void Interact(Player player)
     {
         Debug.Log("E - Interacting with counter");
@@ -36,46 +39,50 @@ public class ClearCounter : MonoBehaviour, IInteractableObject, IKitchenObjectPa
         {
             player.GetKitchenObject().SetClearCounter(this, player.GetKitchenObject().itemInfo);
         }
-        if (this.kitchenObject != null)
+        if (kitchenObject != null)
         {
-            this.GetComponentInChildren<SpriteRenderer>().sprite = null;
+            counterIcon.sprite = null;
         }
     }
     public void HoverOn(Player player)
     {
-
         isSelected?.Enable();
-        if (this.kitchenObject == null)
+        if (kitchenObject == null)
         {
             if (player.GetKitchenObject() != null)
             {
-                this.GetComponentInChildren<SpriteRenderer>().sprite = player.GetKitchenObject().itemInfo.sprite;
+                counterIcon.sprite = player.GetKitchenObject().itemInfo.sprite;
             }
-            else if(player.itemSelected != null)
+            else if (player.itemSelected != null)
             {
-                this.GetComponentInChildren<SpriteRenderer>().sprite = player.itemSelected.sprite;
+                counterIcon.sprite = player.itemSelected.sprite;
             }
             else
             {
-                this.GetComponentInChildren<SpriteRenderer>().sprite = defaultSprite;
+                counterIcon.sprite = defaultSprite;
             }
         }
     }
+
     public void HoverOff(Player player)
     {
         isSelected?.Disable();
-        if (this.kitchenObject == null)
-            this.GetComponentInChildren<SpriteRenderer>().sprite = defaultSprite;
-
+        if (kitchenObject == null)
+        {
+            counterIcon.sprite = defaultSprite;
+        }
     }
+
     public KitchenObject GetKitchenObject()
     {
-        return this.kitchenObject;
+        return kitchenObject;
     }
+
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
     }
+
     public Transform GetSpawnPoint()
     {
         return spawnPoint;
