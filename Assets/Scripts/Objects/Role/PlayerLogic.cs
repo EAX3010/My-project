@@ -1,6 +1,7 @@
 using Assets.Interface;
 using Assets.Scripts.Interface;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -150,5 +151,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public Transform GetSpawnPoint()
     {
         return spawnPoint;
+    }
+
+    public bool HasKitchenObject()
+    {
+       return kitchenObject != null;
     }
 }

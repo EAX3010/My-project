@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SelectedCounter : MonoBehaviour
+public class ClearCounterSelected : MonoBehaviour
 {
     public void Enable()
     {

@@ -1,90 +1,27 @@
 using Assets.Interface;
 using Assets.Scripts.Interface;
-using NUnit.Framework;
+using Assets.Scripts.Objects.Interatable;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using static UnityEditor.Progress;
 
-public class ClearCounter : MonoBehaviour, IInteractableObject, IKitchenObjectParent
+public class ClearCounter : BaseCounter
 {
-    [SerializeField]
-    private ClearCounter NextCounter;
-    [SerializeField]
-    private SelectedCounter isSelected;
-    [SerializeField]
-    private Transform spawnPoint;
-    private KitchenObject kitchenObject;
-    private Sprite defaultSprite;
-    private SpriteRenderer counterIcon;
-
-    private void Awake()
+   
+    public override void Interact(Player player)
     {
-        counterIcon = GetComponentInChildren<SpriteRenderer>();
-        defaultSprite = counterIcon.sprite;
-    }
-
-    public void Interact(Player player)
-    {
-        Debug.Log("E - Interacting with counter");
-        if (GetKitchenObject() == null && player.GetKitchenObject() == null)
+        Debug.Log("E - Interacting with a counter");
+        bool PlayerHasObject = player.HasKitchenObject();
+        bool CounterHasObject = HasKitchenObject();
+        if (!PlayerHasObject && CounterHasObject)
         {
-            var item = Instantiate(player.itemSelected.prefab);
-            item.GetComponent<KitchenObject>().SetClearCounter(this, player.itemSelected);
+            this.GetKitchenObject().MoveTo(player);
         }
-        else if (player.GetKitchenObject() == null)
+        else if (PlayerHasObject && !CounterHasObject)
         {
-            kitchenObject.SetClearCounter(player, kitchenObject.itemInfo);
+            player.GetKitchenObject().MoveTo(this);
         }
-        else if (GetKitchenObject() == null && player.GetKitchenObject() != null)
+        else if (PlayerHasObject && CounterHasObject)
         {
-            player.GetKitchenObject().SetClearCounter(this, player.GetKitchenObject().itemInfo);
+            KitchenObject.Exchange(player, this, this.GetKitchenObject(), player.GetKitchenObject(), this);
         }
-        if (kitchenObject != null)
-        {
-            counterIcon.sprite = null;
-        }
-    }
-    public void HoverOn(Player player)
-    {
-        isSelected?.Enable();
-        if (kitchenObject == null)
-        {
-            if (player.GetKitchenObject() != null)
-            {
-                counterIcon.sprite = player.GetKitchenObject().itemInfo.sprite;
-            }
-            else if (player.itemSelected != null)
-            {
-                counterIcon.sprite = player.itemSelected.sprite;
-            }
-            else
-            {
-                counterIcon.sprite = defaultSprite;
-            }
-        }
-    }
-
-    public void HoverOff(Player player)
-    {
-        isSelected?.Disable();
-        if (kitchenObject == null)
-        {
-            counterIcon.sprite = defaultSprite;
-        }
-    }
-
-    public KitchenObject GetKitchenObject()
-    {
-        return kitchenObject;
-    }
-
-    public void SetKitchenObject(KitchenObject kitchenObject)
-    {
-        this.kitchenObject = kitchenObject;
-    }
-
-    public Transform GetSpawnPoint()
-    {
-        return spawnPoint;
     }
 }

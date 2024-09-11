@@ -10,6 +10,7 @@ namespace Assets.Scripts.Interface
     public interface IKitchenObjectParent
     {
         public KitchenObject GetKitchenObject();
+        public bool HasKitchenObject();
         public void SetKitchenObject(KitchenObject kitchenObject);
         public Transform GetSpawnPoint();
     }
