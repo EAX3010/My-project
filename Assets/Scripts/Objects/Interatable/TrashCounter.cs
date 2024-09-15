@@ -8,14 +8,18 @@ public class TrashCounter : MonoBehaviour, IInteractableObject
 {
     [SerializeField]
     private ClearCounterSelected isSelected;
-    public  void Interact(Player player)
+    public  void AltInteract(Player player)
     {
-        Debug.Log("E - Interacting with a Trash");
+        Debug.Log("Q - Interacting with a Trash");
         bool PlayerHasObject = player.HasKitchenObject();
         if (PlayerHasObject)
         {
             player.GetKitchenObject().RemoveItem();
         }
+    }
+    public void Interact(Player player)
+    {
+        return;
     }
     public void HoverOn(Player player)
     {
@@ -25,5 +29,4 @@ public class TrashCounter : MonoBehaviour, IInteractableObject
     {
         isSelected?.Disable();
     }
-
 }

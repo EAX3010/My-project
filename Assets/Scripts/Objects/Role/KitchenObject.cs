@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class KitchenObject : MonoBehaviour
 {
+
     public KitchenScriptableObjects itemInfo;
     private IKitchenObjectParent parentObject;
-
-    public float lurpSpeed = 100.0f; // Speed of interpolation
+    private float lurpSpeed = 10.0f; // Speed of interpolation
 
     public void MoveTo(IKitchenObjectParent parentObject, bool smothMove = true)
     {

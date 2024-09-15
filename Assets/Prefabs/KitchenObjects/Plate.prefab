@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo: {fileID: 11400000, guid: 45b0c1e3b0d60dc478be512c134c3c33, type: 2}
+  lurpSpeed: 0
 --- !u!1001 &1334154783961231100
 PrefabInstance:
   m_ObjectHideFlags: 0

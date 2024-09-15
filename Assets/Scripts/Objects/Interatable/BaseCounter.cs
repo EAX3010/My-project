@@ -44,6 +44,7 @@ namespace Assets.Scripts.Objects.Interatable
         {
             return kitchenObject != null;
         }
+        public abstract void AltInteract(Player player);
         public abstract void Interact(Player player);
     }
 }

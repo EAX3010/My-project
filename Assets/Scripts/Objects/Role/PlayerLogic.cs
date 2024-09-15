@@ -23,18 +23,19 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     private bool isMoving;
     private Vector3 lookingAt;
     private GameInput gameInput;
-    private IInteractableObject selectedCounter;
+    
     private KitchenObject kitchenObject;
     private const float InteractionDistance = 1f;
     private const float PlayerHeight = 2f;
     private const float PlayerRadius = 0.7f;
-   
+    private IInteractableObject selectedCounter;
 
     void Start()
     {
         // Initialize GameInput and subscribe to events
         gameInput = new GameInput();
         gameInput.OnInteractAction += OnInteractAction;
+        gameInput.OnInteractAltAction += OnInteractAltAction;
         transform.FaceObjectToCamera();
     }
     void Update()
@@ -45,7 +46,14 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void OnInteractAction(object sender, EventArgs e)
     {
-        selectedCounter?.Interact(this);
+            selectedCounter.Interact(this);
+    }
+    private void OnInteractAltAction(object sender, EventArgs e)
+    {
+        if (selectedCounter is TrashCounter)
+            selectedCounter?.AltInteract(this);
+        if (selectedCounter is CuttingCounter)
+            selectedCounter?.AltInteract(this);
     }
 
     private void HandleInteractions()

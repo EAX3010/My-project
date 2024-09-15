@@ -27,5 +27,8 @@ public class FoodCounter : BaseCounter
             OnPlayerGrabbingObject.Invoke(this, EventArgs.Empty);
         }
     }
-   
+    public override void AltInteract(Player player)
+    {
+        return;
+    }
 }
